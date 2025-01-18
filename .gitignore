@@ -2,6 +2,7 @@
 images/
 Logo_dataset/
 test_images/
+detected_logos/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
