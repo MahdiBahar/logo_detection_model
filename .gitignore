@@ -5,6 +5,7 @@ test_images/
 detected_logos/
 Test/
 backup images/
+test_augmentation/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
