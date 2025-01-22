@@ -6,6 +6,11 @@ detected_logos/
 Test/
 backup images/
 test_augmentation/
+Test2/
+Test2_temp/
+Test3_added/
+data-augmentation_v2
+Test4/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
