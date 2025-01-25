@@ -13,8 +13,9 @@ data-augmentation_v2
 Test4/
 data-augmentation_v3
 data-augmentation_v4
-flagged_images
-flagged_images_thr0.8
+data-augmentation_v5
+flag_images
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

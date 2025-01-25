@@ -5,11 +5,11 @@ import csv
 import shutil
 
 # model = tf.keras.models.load_model("/home/mahdi/logo_detection_model/data-augmentation_v4/trained_model/mobilenet_finetuned_augv4_zo_gr_ro_2l_v19.h5")
-model = tf.keras.models.load_model("//home/mahdi/logo_detection_model/data-augmentation_v2/trained_model/mobilenet_finetuned_add_data_3aug_2trainlayer_v14.h5")
-
+# model = tf.keras.models.load_model("//home/mahdi/logo_detection_model/data-augmentation_v2/trained_model/mobilenet_finetuned_add_data_3aug_2trainlayer_v14.h5")
+model = tf.keras.models.load_model("/home/mahdi/logo_detection_model/data-augmentation_v5/trained_model/mobilenet_finetuned_augv5_modify_datasetv2_rofl_v20.h5")
 def process_images_in_folders(base_dir, model):
    
-    save_dir = "/home/mahdi/logo_detection_model/flagged_images_thr0.8/" 
+    save_dir = "/home/mahdi/logo_detection_model/flagged_images_thr0.8_v20/" 
     os.makedirs(save_dir, exist_ok=True)
     results = []  # To store prediction results
 
@@ -72,7 +72,7 @@ else:
 
 
 if results:
-    with open("prediction_results_thr0.8.csv", "w", newline="") as f:
+    with open("prediction_results_thr0.8_v20.csv", "w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=["folder", "file_name", "result", "flag", "confidence"])
         writer.writeheader()
         writer.writerows(results)
