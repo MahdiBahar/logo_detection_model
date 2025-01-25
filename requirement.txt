@@ -2,3 +2,4 @@ pillow
 tensorflow
 matplotlib
 scikit-learn
+cairosvg
