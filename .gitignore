@@ -12,6 +12,7 @@ Test3_added/
 data-augmentation_v2
 Test4/
 data-augmentation_v3
+data-augmentation_v4
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
