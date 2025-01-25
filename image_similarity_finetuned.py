@@ -8,7 +8,7 @@ import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
 # Load the fine-tuned model
-model = tf.keras.models.load_model("/home/mahdi/logo_detection_model/data-augmentation_v4/trained_model/mobilenet_finetuned_augv4_zo_gr_ro_2l_v19.h5")
+# model = tf.keras.models.load_model("/home/mahdi/logo_detection_model/data-augmentation_v4/trained_model/mobilenet_finetuned_augv4_zo_gr_ro_2l_v19.h5")
 
 
 # convert svg to png
@@ -75,7 +75,7 @@ def logo_similarity_make_decision (img_path, model):
             return ["An error is occured" , 0 , "None"]
         else: 
             # img = preprocess_image(img_path, target_size=(224, 224), remove_metadata=True)
-            img = load_img(image_path, target_size=(224, 224))
+            img = load_img(img_path, target_size=(224, 224))
             img_array = img_to_array(img) / 255.0  
             img_array = tf.expand_dims(img_array, axis=0)  # Add batch dimension
             #check the image is invalid or not
@@ -102,7 +102,7 @@ def logo_similarity_make_decision (img_path, model):
 # image_path = "/home/mahdi/Datasets/create_new_test_dataset/new_false_tag_logo/1701/1701_1.jpg"
 # image_path = "/home/mahdi/logo_detection_model/Test3_added/1/1215_1.jpg"
 # image_path = "/home/mahdi/logo_detection_model/Test3_added/1/571_1.jpg"
-image_path = "/home/mahdi/logo_detection_model/Test3_added/1/3171_2.jpg"
+# image_path = "/home/mahdi/logo_detection_model/Test3_added/1/3171_2.jpg"
 
-result, flag, confidence = logo_similarity_make_decision(image_path, model)
-print(f"Result: {result}, with flag : {flag} and Confidence: {confidence}")
+# result, flag, confidence = logo_similarity_make_decision(image_path, model)
+# print(f"Result: {result}, with flag : {flag} and Confidence: {confidence}")
