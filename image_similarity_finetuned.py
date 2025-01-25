@@ -86,7 +86,7 @@ def logo_similarity_make_decision (img_path, model):
             # img_array = tf.expand_dims(img, axis=0)  # Add batch dimension
             # Predict
             prediction = model.predict(img_array)
-            if prediction[0][0] > 0.5:
+            if prediction[0][0] > 0.8:
                 return "Bank Mellat Logo", 1, f'{prediction[0][0]:.4f}'
             else:
                 return "Not Logo", 0 , f'{prediction[0][0]:.4f}'

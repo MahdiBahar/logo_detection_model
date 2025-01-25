@@ -2,21 +2,15 @@ import os
 import tensorflow as tf
 from image_similarity_finetuned import logo_similarity_make_decision
 import csv
+import shutil
 
 # model = tf.keras.models.load_model("/home/mahdi/logo_detection_model/data-augmentation_v4/trained_model/mobilenet_finetuned_augv4_zo_gr_ro_2l_v19.h5")
 model = tf.keras.models.load_model("//home/mahdi/logo_detection_model/data-augmentation_v2/trained_model/mobilenet_finetuned_add_data_3aug_2trainlayer_v14.h5")
 
 def process_images_in_folders(base_dir, model):
-    """
-    Function to iterate through folders, process images, and get predictions.
-
-    Args:
-        base_dir (str): Path to the base directory containing image folders.
-        model: Pre-trained Keras model.
-
-    Returns:
-        list: A list of dictionaries containing the file name, folder name, and predictions.
-    """
+   
+    save_dir = "/home/mahdi/logo_detection_model/flagged_images_thr0.8/" 
+    os.makedirs(save_dir, exist_ok=True)
     results = []  # To store prediction results
 
     for folder_name in os.listdir(base_dir):
@@ -52,6 +46,13 @@ def process_images_in_folders(base_dir, model):
                 "flag": flag,
                 "confidence": confidence
             })
+            # Save flagged images
+            if flag == 1:  # If the image has a flag of 1
+                # Create a subfolder in the save directory for the corresponding class
+                class_save_dir = os.path.join(save_dir, folder_name)
+                os.makedirs(class_save_dir, exist_ok=True)
+                shutil.copy(file_path, os.path.join(class_save_dir, file_name))
+
 
     return results
 
@@ -71,7 +72,7 @@ else:
 
 
 if results:
-    with open("prediction_results.csv", "w", newline="") as f:
+    with open("prediction_results_thr0.8.csv", "w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=["folder", "file_name", "result", "flag", "confidence"])
         writer.writeheader()
         writer.writerows(results)
