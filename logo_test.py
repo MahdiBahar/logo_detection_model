@@ -1,8 +1,10 @@
 import os
 import tensorflow as tf
 from image_similarity_finetuned import logo_similarity_make_decision
-model = tf.keras.models.load_model("/home/mahdi/logo_detection_model/data-augmentation_v4/trained_model/mobilenet_finetuned_augv4_zo_gr_ro_2l_v19.h5")
+import csv
 
+# model = tf.keras.models.load_model("/home/mahdi/logo_detection_model/data-augmentation_v4/trained_model/mobilenet_finetuned_augv4_zo_gr_ro_2l_v19.h5")
+model = tf.keras.models.load_model("//home/mahdi/logo_detection_model/data-augmentation_v2/trained_model/mobilenet_finetuned_add_data_3aug_2trainlayer_v14.h5")
 
 def process_images_in_folders(base_dir, model):
     """
@@ -16,22 +18,32 @@ def process_images_in_folders(base_dir, model):
         list: A list of dictionaries containing the file name, folder name, and predictions.
     """
     results = []  # To store prediction results
-    
+
     for folder_name in os.listdir(base_dir):
         folder_path = os.path.join(base_dir, folder_name)
+        
         if not os.path.isdir(folder_path):
+            print(f"Skipping non-folder: {folder_name}")
             continue  # Skip non-folder files
 
         print(f"Processing folder: {folder_name}")
         for file_name in os.listdir(folder_path):
             file_path = os.path.join(folder_path, file_name)
-            if not (file_path.lower().endswith(('.jpg', '.jpeg', '.png', '.svg'))):
-                continue  # Skip non-image files
-            
+
+            # Check if the file is an image
+            if not file_path.lower().endswith(('.jpg', '.jpeg', '.png', '.svg')):
+                print(f"Skipping non-image file: {file_name}")
+                continue
+
             print(f"Processing file: {file_name}")
             # Call the prediction function
             result, flag, confidence = logo_similarity_make_decision(file_path, model)
-            
+
+            # Check if the result is valid
+            if result == "Invalid image(s)":
+                print(f"Invalid image skipped: {file_name}")
+                continue
+
             # Store the results
             results.append({
                 "folder": folder_name,
@@ -43,22 +55,28 @@ def process_images_in_folders(base_dir, model):
 
     return results
 
-
 # Example usage
-base_dir = "/home/mahdi/logo_detection_model/Test2_temp/8219/"  # Update this to your folder path
+# base_dir = "/home/mahdi/Datasets/new_false_tag_logo/"  # Update this to your folder path
+base_dir = "/home/mahdi/Datasets/50/"  # Update this to your folder path
+
 results = process_images_in_folders(base_dir, model)
 
 # Print results
-for r in results:
-    print(f"Folder: {r['folder']}, File: {r['file_name']}, Result: {r['result']}, Confidence: {r['confidence']}")
+if results:
+    for r in results:
+        print(f"Folder: {r['folder']}, File: {r['file_name']}, Result: {r['result']}, Confidence: {r['confidence']}")
+else:
+    print("No results were generated. Check if images are valid and present in the folder.")
 
-import csv
 
-with open("prediction_results.csv", "w", newline="") as f:
-    writer = csv.DictWriter(f, fieldnames=["folder", "file_name", "result", "flag", "confidence"])
-    writer.writeheader()
-    writer.writerows(results)
 
+if results:
+    with open("prediction_results.csv", "w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=["folder", "file_name", "result", "flag", "confidence"])
+        writer.writeheader()
+        writer.writerows(results)
+else:
+    print("No data to write to CSV. The `results` list is empty.")
 
 
 
