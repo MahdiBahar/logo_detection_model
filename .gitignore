@@ -15,7 +15,7 @@ data-augmentation_v3
 data-augmentation_v4
 data-augmentation_v5
 flag_images
-
+autoencoder/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
